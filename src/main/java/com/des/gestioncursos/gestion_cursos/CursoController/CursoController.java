@@ -14,48 +14,60 @@ import java.util.List;
 
 @Controller
 public class CursoController {
+    //Inyectamos
     @Autowired
     private CursoRepository cursoRepository;
+
+    //Principal
 
     @GetMapping
     public String home(){
         return "redirect:/cursos";
     }
 
-    //Model -> agregar prductos para enviar a la vista
-    //Principal
+    //Model -> permite relacionar objetos entre la vista y el controlador
+    //Método para listar cursos
     @GetMapping("/cursos")
     public String listarCursos(Model model){
-        List<Curso> cursos = cursoRepository.findAll(); //Listar los cursos
-        cursos = cursoRepository.findAll();
+        //Obtener  los cursos y se almacenan en la lista "cursos"
+        List<Curso> cursos = cursoRepository.findAll();
 
+        // Se agregan los cursos al modelo para que estén disponibles en la vista
         model.addAttribute("cursos", cursos);
 
-        //Como es primera llamada simplemente cursos
+        //Dirige a cursos.html, como es primera llamada simplemente colocamos cursos
         return "cursos";
     }
 
-    //Método que muestra el formulario y los datos que les guarde
+    //Método que muestra el formulario y alista los datos
     @GetMapping("/cursos/nuevo")
     public String agregarCurso(Model model){
+        //Crea un nuevo curso
         Curso curso = new Curso();
-        curso.setPublicado(true); //Por defecto
+        //Por defecto lo coloca en true
+        curso.setPublicado(true);
 
-        model.addAttribute("curso", curso); //se enviará al formulario y los datos se asignan al objeto
+        //se enviará al formulario y los datos se asignan al objeto
+        model.addAttribute("curso", curso);
+
+        //Titulo de la página curso_form
         model.addAttribute("pageTitle", "Nuevo curso");
 
+        //Dirige a la página curso_form
         return "curso_form";
 
     }
 
 
-    //Redirect attribute -> para agregar atributos
-    //Cuando le de en guardar formulario se ejecuta este método
+    //Método que sirve para guardar un curso
     @PostMapping("/cursos/save")
     public String guardarCurso(Curso curso, RedirectAttributes redirectAttributes){
         try{
-            //Para gaurdar un curso
+            //Para guardar un curso
             cursoRepository.save(curso);
+
+            //Redirect attribute -> para agregar atributos
+            //
             redirectAttributes.addFlashAttribute("message", "El curso ha sido guardado con éxito");
         }catch(Exception e){
             //Por si no se ha logrado guardar el curso
@@ -64,11 +76,11 @@ public class CursoController {
         }
 
         //Como es tercera llamada hacemos uso de redirect
+        //Porque rediciona a un archivo
         return "redirect:/cursos";
 
     }
 
-    //Porque rediciona a un archivo
     @GetMapping("/cursos/{id}")
     public String editarCurso(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes){
         try{
@@ -77,7 +89,6 @@ public class CursoController {
 
             model.addAttribute("pageTitle", "Editar curso : " + curso.getTitulo());
             model.addAttribute("curso", curso);
-            //redirectAttributes.addFlashAttribute("message", "El curso ha sido actualizado con éxito");
             return "curso_form";
         }catch(Exception e){
             //Por si no se ha logrado guardar el curso

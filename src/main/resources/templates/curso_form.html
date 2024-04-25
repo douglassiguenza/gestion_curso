@@ -10,19 +10,25 @@
 
 </head>
 <body>
-
+  <!--Se accede al contenido del archivo header.html-->
+                                <!--Carpeta/archivo::fragmentname-->
   <div class="container" th:replace="fragments/header::header">
 
   </div>
 
   <div class="container-fluid">
+      <!--Indica el titulo de la pagina cuya información la obtiene del metodo agregarCurso-->
     <h2 class="text-center">[[${pageTitle}]]</h2>
 
     <div class="my-3">
         <!--                                           Para imagenes y otros datos -->
       <form th:action="@{/cursos/save}" method="post" enctype="multipart/form-data" th:object="${curso}" style="max-width: 550px; margin: 0 auto;">
+
+          <!--Id-->
           <input type="hidden" th:field="*{id}">
+
           <div class="p-3">
+            <!--Titulo-->
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="titulo">Titulo</label>
             </div>
@@ -31,6 +37,7 @@
                 <input type="text" th:field="*{titulo}" required minlength="2" maxlength="128" class="form-control" id="titulo">
             </div>
 
+            <!--Descripción-->
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="descripcion">Descripción</label>
             </div>
@@ -38,6 +45,7 @@
                 <input type="text" th:field="*{descripcion}" required minlength="2" maxlength="256" class="form-control" id="descripcion">
             </div>
 
+            <!--Nivel-->
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="nivel">Nivel</label>
             </div>
@@ -45,6 +53,7 @@
                 <input type="text" th:field="*{nivel}" required min="2" class="form-control" id="nivel">
             </div>
 
+            <!--Publicado-->
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Publicado</label>
             </div>
@@ -52,11 +61,10 @@
                 <input type="checkbox" th:field="*{publicado}">
             </div>
 
-
+            <!--Botones-->
             <div class="text-center">
                 <input type="submit" value="Guardar" class="btn btn-primary btn-sm mr-2">
                 <input type="submit" value="Cancelar" id="btnCancelar" class="btn btn-primary btn-sm">
-
             </div>
 
 
