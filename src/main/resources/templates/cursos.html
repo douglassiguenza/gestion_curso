@@ -37,6 +37,13 @@
     </div>
 
     <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-12 d-flex justify-content-start">
+                <a th:href="@{/export/pdf}" class="btn btn-danger">Generar PDF</a>
+                &nbsp; &nbsp;
+                <a th:href="@{/export/excel}" class="btn btn-success">Generar excel</a>
+            </div>
+        </div>
         <!--Creación de tabla-->
         <table class="table table-hover table-responsive-xl">
             <!--Definimos la cabecera de la tabla-->
@@ -53,6 +60,7 @@
 
             <!--Definimos el cuerpo de la tabla-->
             <tbody>
+
                 <!--Recorre todos los campos de los cursos-->
                 <tr th:each="curso : ${cursos}">
                     <td>[[${curso.id}]]</td>
